@@ -1,0 +1,40 @@
+---
+title: "Leaflet Exercise"
+--author: "Kiran Joshi"
+--date: "December 25, 2017"
+output: html_document
+---
+
+```{r global, echo=FALSE}
+knitr::opts_chunk$set(echo=TRUE, warning=FALSE, out.width='950px', dpi=200)
+```
+
+```{r setup, include=FALSE}
+library(leaflet)
+```
+
+# Date: `r format(Sys.time(), '%d %B, %Y')`
+
+### My Life as a Student
+
+The blue rectangle represents my domain as a student at NSU Florida, and the Icons are my frequented locations.
+
+```{r Map,echo=FALSE}
+# Get Icon
+nsuicon <- makeIcon(iconUrl = "http://www.nsusharks.com/images/responsive/logo.png",iconWidth = 31*215/230,iconHeight = 31,iconAnchorX = 31*215/230/2,iconAnchorY = 31/2)
+
+# Get Locations I frequented
+nsulatlong <- data.frame(lat=c(26.0809381,26.0806731,26.0796856,26.0805166), lng=c(-80.2433084,-80.2424043,-80.2422500,-80.2420447))
+
+# Get URLs for popups
+
+nsusites <- c("<a>Main Student Parking Garage</a>","<a href='http://www.business.nova.edu/'>College of Business & Enterprenuership</a>","<a href='http://sherman.library.nova.edu/'>Library</a>","<a href='https://locations.einsteinbros.com/ll/US/FL/Davie/3301-College-Ave'>Cafeteria</a>")
+
+# Draw the map adding markers as frequented locations with the rectangular domain marked out
+
+nsulatlong %>% leaflet() %>% addTiles() %>% addMarkers(icon=nsuicon,popup=nsusites) %>% addRectangles(lat1=26.07890,lng1=-80.24195,lat2=26.08150,lng2=-80.24350,label='My Domain')
+
+```
+
+
+
